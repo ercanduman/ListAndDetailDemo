@@ -12,6 +12,10 @@ import retrofit2.http.GET
  */
 interface RestApi {
 
+    companion object {
+        const val BASE_URL = ""
+    }
+
     @GET
     suspend fun getItems(): Response<RestApiResponse>
 
