@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ercanduman.listanddetaildemo.R
+import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.databinding.FragmentItemsBinding
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
@@ -50,5 +51,13 @@ class ItemsFragment : Fragment(R.layout.fragment_items) {
 
     private fun handleData(data: RestApiResponse) {
         displayItems()
+        val mutableList = mutableListOf<Product>()
+        data.forEach { item -> mutableList.addAll(item.products) }
+        initRecyclerView(mutableList)
+    }
+
+    private fun initRecyclerView(list: MutableList<Product>) = binding.recyclerView.apply {
+        setHasFixedSize(true)
+        adapter = ProductAdapter(list)
     }
 }
