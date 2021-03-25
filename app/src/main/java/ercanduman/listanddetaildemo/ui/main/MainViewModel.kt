@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import ercanduman.listanddetaildemo.data.internal.RetrofitInstance
 import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.util.DataResult
 import kotlinx.coroutines.launch
@@ -16,7 +17,13 @@ import kotlinx.coroutines.launch
  * @author ercanduman
  * @since  25.03.2021
  */
-class MainViewModel(private val repository: AppRepository) : ViewModel() {
+class MainViewModel : ViewModel() {
+
+    /*
+     Creating AppRepository instance here is bad practice which make objects tightly coupled.
+     Instead Hilt library can be used and instance of object should be passed as parameter to class.
+     */
+    private  var repository: AppRepository = AppRepository(RetrofitInstance.restApi)
 
     private val _dataResult = MutableLiveData<DataResult>()
     val dataResult: LiveData<DataResult> = _dataResult
