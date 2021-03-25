@@ -6,6 +6,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import ercanduman.listanddetaildemo.R
+import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.databinding.FragmentItemsBinding
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
 import ercanduman.listanddetaildemo.util.DataResult
@@ -24,26 +25,30 @@ class ItemsFragment : Fragment(R.layout.fragment_items) {
 
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getItems()
-        handleData()
+        getData()
     }
 
-    private fun handleData() {
+    private fun getData() {
         viewModel.dataResult.observe(viewLifecycleOwner) { result ->
             when (result) {
-                is DataResult.Empty -> showContent(message = getString(R.string.no_data_found))
-                is DataResult.Error -> showContent(message = result.message)
+                is DataResult.Empty -> displayItems(message = getString(R.string.no_data_found))
+                is DataResult.Error -> displayItems(message = result.message)
                 is DataResult.Loading -> binding.progressBar.isVisible = true
-                is DataResult.Success -> showContent(true)
+                is DataResult.Success -> handleData(result.data)
             }
         }
     }
 
-    private fun showContent(contentAvailable: Boolean = false, message: String = "") {
+    private fun displayItems(message: String = "") {
         binding.apply {
             progressBar.isVisible = false
-            recyclerView.isVisible = contentAvailable
-            tvError.isVisible = contentAvailable.not()
+            recyclerView.isVisible = message.isEmpty()
+            tvError.isVisible = message.isNotEmpty()
             tvError.text = message
         }
+    }
+
+    private fun handleData(data: RestApiResponse) {
+        displayItems()
     }
 }
