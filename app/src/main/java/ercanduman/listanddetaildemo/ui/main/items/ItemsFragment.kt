@@ -16,12 +16,12 @@ import ercanduman.listanddetaildemo.util.DataResult
 /**
  * A simple [Fragment] subclass as the default destination in the navigation.
  */
-class ItemsFragment : Fragment(R.layout.fragment_items), ProductAdapter.OnProductClickListener {
+class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductClickListener {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentItemsBinding
 
-    private val productAdapter = ProductAdapter(this)
+    private val productAdapter = ItemsAdapter(this)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentItemsBinding.bind(view)

@@ -19,8 +19,8 @@ import ercanduman.listanddetaildemo.databinding.ListItemProductBinding
  * @author ercanduman
  * @since  25.03.2021
  */
-class ProductAdapter(private val listener: OnProductClickListener) :
-    ListAdapter<Product, ProductAdapter.ProductHolder>(PRODUCT_COMPARATOR) {
+class ItemsAdapter(private val listener: OnProductClickListener) :
+    ListAdapter<Product, ItemsAdapter.ProductHolder>(PRODUCT_COMPARATOR) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductHolder {
         val binding =
