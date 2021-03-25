@@ -11,21 +11,19 @@ import ercanduman.listanddetaildemo.util.DataResult
  */
 class AppRepository(private val api: RestApi) {
 
-    suspend fun getItems() {
-        try {
-            val result = api.getItems()
-            if (result.isSuccessful) {
-                val resultBody = result.body()
-                if (resultBody != null && resultBody.isNotEmpty()) {
-                    DataResult.Success(resultBody)
-                } else {
-                    DataResult.Empty
-                }
+    suspend fun getItems(): DataResult = try {
+        val result = api.getItems()
+        if (result.isSuccessful) {
+            val resultBody = result.body()
+            if (resultBody != null && resultBody.isNotEmpty()) {
+                DataResult.Success(resultBody)
             } else {
-                DataResult.Error("Code: ${result.code()} - Error: ${result.message()} - ${result.errorBody()}")
+                DataResult.Empty
             }
-        } catch (e: Exception) {
-            DataResult.Error(e.message ?: "An unknown error occurred...")
+        } else {
+            DataResult.Error("Code: ${result.code()} - Error: ${result.message()} - ${result.errorBody()}")
         }
+    } catch (e: Exception) {
+        DataResult.Error(e.message ?: "An unknown error occurred...")
     }
 }
