@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import ercanduman.listanddetaildemo.R
 import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
@@ -68,5 +69,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
 
     override fun onProductClicked(product: Product) {
         Toast.makeText(requireContext(), "${product.name} clicked.", Toast.LENGTH_SHORT).show()
+        val action = ItemsFragmentDirections.actionItemFragmentToDetailFragment(product)
+        findNavController().navigate(action)
     }
 }
