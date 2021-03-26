@@ -22,8 +22,11 @@ class MainViewModel : ViewModel() {
     /*
      Creating AppRepository instance here is bad practice which make objects tightly coupled.
      Instead Hilt library can be used and instance of object should be passed as parameter to class.
+
+     ViewModelFactory could be used, but then these API ve repository instance would be created
+     in fragment.
      */
-    private  var repository: AppRepository = AppRepository(RetrofitInstance.restApi)
+    private val repository: AppRepository = AppRepository(RetrofitInstance.restApi)
 
     private val _dataResult = MutableLiveData<DataResult>()
     val dataResult: LiveData<DataResult> = _dataResult
