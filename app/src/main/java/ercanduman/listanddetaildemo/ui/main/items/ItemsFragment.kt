@@ -46,7 +46,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
     private fun displayItems(message: String = "") {
         binding.apply {
             progressBar.isVisible = false
-            recyclerView.isVisible = message.isEmpty()
+            recyclerViewItems.isVisible = message.isEmpty()
             tvError.isVisible = message.isNotEmpty()
             tvError.text = message
         }
@@ -61,7 +61,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
     }
 
     private fun initRecyclerView() {
-        binding.recyclerView.apply {
+        binding.recyclerViewItems.apply {
             adapter = productAdapter
             setHasFixedSize(true)
         }
