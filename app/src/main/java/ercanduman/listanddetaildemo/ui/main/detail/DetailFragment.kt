@@ -3,7 +3,6 @@ package ercanduman.listanddetaildemo.ui.main.detail
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 import ercanduman.listanddetaildemo.R
 import ercanduman.listanddetaildemo.databinding.FragmentDetailBinding
 
@@ -14,9 +13,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val binding = FragmentDetailBinding.bind(view)
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
-        }
+        FragmentDetailBinding.bind(view)
     }
 }
