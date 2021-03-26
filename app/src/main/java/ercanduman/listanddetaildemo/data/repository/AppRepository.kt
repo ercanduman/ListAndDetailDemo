@@ -1,7 +1,9 @@
 package ercanduman.listanddetaildemo.data.repository
 
+import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.util.DataResult
+import retrofit2.Response
 
 /**
  * Connects to [RestApi] and provides data for ViewModel
@@ -21,9 +23,14 @@ class AppRepository(private val api: RestApi) {
                 DataResult.Empty
             }
         } else {
-            DataResult.Error("Code: ${result.code()} - Error: ${result.message()} - ${result.errorBody()}")
+            DataResult.Error(generateErrorMessage(result))
         }
     } catch (e: Exception) {
         DataResult.Error(e.message ?: "An unknown error occurred...")
+    }
+
+    companion object {
+        fun generateErrorMessage(result: Response<RestApiResponse>) =
+            "Code: ${result.code()} - Error: ${result.message()} - ${result.errorBody()}"
     }
 }
