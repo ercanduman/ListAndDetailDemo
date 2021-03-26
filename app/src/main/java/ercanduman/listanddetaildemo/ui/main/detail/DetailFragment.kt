@@ -2,6 +2,8 @@ package ercanduman.listanddetaildemo.ui.main.detail
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
@@ -24,11 +26,11 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val product: Product = args.product
 
         binding.apply {
-            binding.productName.text = product.name
-            binding.productDescription.text = product.description
+            binding.productName.setContent(product.name)
+            binding.productDescription.setContent(product.description)
 
             val priceText = "${product.salePrice.currency} ${product.salePrice.amount}"
-            binding.productPrice.text = priceText
+            binding.productPrice.setContent(priceText)
 
             Glide.with(this@DetailFragment)
                 .load(RestApi.BASE_URL + product.url)
@@ -36,5 +38,10 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
                 .error(R.drawable.ic_error_outline)
                 .into(binding.productImage)
         }
+    }
+
+    private fun TextView.setContent(content: String?) {
+        this.isVisible = content != null && content.isNotEmpty()
+        text = content
     }
 }
