@@ -1,11 +1,15 @@
 package ercanduman.listanddetaildemo.ui.main.items
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import ercanduman.listanddetaildemo.R
 import ercanduman.listanddetaildemo.data.model.Product
+import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.databinding.ListItemProductBinding
 
 /**
@@ -51,12 +55,25 @@ class ItemsAdapter(private val listener: OnProductClickListener) :
 
         fun bindData(product: Product) {
             binding.apply {
-                tvArticleTitle.text = product.name
+                tvProductName.apply {
+                    text = product.name
+                    if (product.categoryId == CATEGORY_ID_DRINK) {
+                        setBackgroundColor(Color.BLUE)
+                    }
+                }
+
+                Glide.with(binding.root)
+                    .load(RestApi.BASE_URL + product.url)
+                    .centerCrop()
+                    .error(R.drawable.ic_error_outline)
+                    .into(ivProductImage)
             }
         }
     }
 
     companion object {
+        const val CATEGORY_ID_DRINK = "36803"
+
         /**
          *  DiffUtil can calculate differences between versions of the list.
          */

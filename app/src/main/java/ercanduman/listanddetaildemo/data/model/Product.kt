@@ -1,8 +1,10 @@
 package ercanduman.listanddetaildemo.data.model
 
-
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
+import kotlinx.parcelize.Parcelize
 
+@Parcelize
 data class Product(
     @SerializedName("categoryId")
     val categoryId: String,
@@ -16,4 +18,4 @@ data class Product(
     val salePrice: SalePrice,
     @SerializedName("url")
     val url: String
-)
+) : Parcelable

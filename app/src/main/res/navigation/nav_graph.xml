@@ -12,7 +12,7 @@
         tools:layout="@layout/fragment_items">
 
         <action
-            android:id="@+id/action_FirstFragment_to_SecondFragment"
+            android:id="@+id/action_ItemFragment_to_DetailFragment"
             app:destination="@id/DetailFragment" />
     </fragment>
     <fragment
@@ -20,9 +20,8 @@
         android:name="ercanduman.listanddetaildemo.ui.main.detail.DetailFragment"
         android:label="@string/details"
         tools:layout="@layout/fragment_detail">
-
-        <action
-            android:id="@+id/action_SecondFragment_to_FirstFragment"
-            app:destination="@id/ItemsFragment" />
+        <argument
+            android:name="product"
+            app:argType="ercanduman.listanddetaildemo.data.model.Product" />
     </fragment>
 </navigation>
