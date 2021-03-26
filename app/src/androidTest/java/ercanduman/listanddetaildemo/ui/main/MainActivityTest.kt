@@ -2,8 +2,7 @@ package ercanduman.listanddetaildemo.ui.main
 
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
-import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
-import androidx.test.espresso.matcher.ViewMatchers.withId
+import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import ercanduman.listanddetaildemo.R
 import org.junit.Rule
@@ -32,5 +31,10 @@ class MainActivityTest {
     @Test
     fun test_launch_activity_and_check_toolbar_displayed() {
         onView(withId(R.id.toolbar)).check(matches(isDisplayed()))
+    }
+
+    @Test
+    fun test_launch_activity_and_check_items_fragment_title_displayed() {
+        onView(withText(R.string.items)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 }
