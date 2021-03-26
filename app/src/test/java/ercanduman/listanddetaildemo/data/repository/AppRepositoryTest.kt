@@ -1,8 +1,10 @@
 package ercanduman.listanddetaildemo.data.repository
 
 import com.google.common.truth.Truth.assertThat
+import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
+import ercanduman.listanddetaildemo.data.model.SalePrice
 import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.util.DataResult
 import kotlinx.coroutines.test.runBlockingTest
@@ -64,7 +66,8 @@ class AppRepositoryTest {
 
     @Test
     fun test_call_API_forSuccessRetrofitResponse() = runBlockingTest {
-        val responseItem = RestApiResponseItem("description", "123", "Name", emptyList())
+        val product = Product("1", "Desc", "11", "Name", SalePrice("1.1", "EUR"), "")
+        val responseItem = RestApiResponseItem("description", "123", "Name", listOf(product))
         val apiResponse = RestApiResponse()
         apiResponse.add(responseItem)
 
