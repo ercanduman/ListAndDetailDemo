@@ -64,6 +64,8 @@ dependencies {
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     // Google Truth library
     testImplementation "com.google.truth:truth:1.0.1"
+    // Provides InstantTaskExecutorRule
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
     /* Testing - END */
 
     // Retrofit + GSON
