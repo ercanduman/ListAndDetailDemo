@@ -58,11 +58,14 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestImplementation "androidx.test.espresso:espresso-contrib:3.3.0"
     // Mockito - Unit tests
+    testImplementation 'org.mockito:mockito-inline:2.13.0'
     testImplementation "org.mockito.kotlin:mockito-kotlin:2.2.11"
     // Kotlin-Coroutines test library
     testImplementation 'org.jetbrains.kotlinx:kotlinx-coroutines-test:1.4.2'
     // Google Truth library
     testImplementation "com.google.truth:truth:1.0.1"
+    // Provides InstantTaskExecutorRule
+    testImplementation "androidx.arch.core:core-testing:2.1.0"
     /* Testing - END */
 
     // Retrofit + GSON

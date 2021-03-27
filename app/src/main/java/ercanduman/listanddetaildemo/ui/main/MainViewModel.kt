@@ -26,7 +26,7 @@ class MainViewModel : ViewModel() {
      ViewModelFactory could be used, but then these API ve repository instance would be created
      in fragment.
      */
-    private val repository: AppRepository = AppRepository(RetrofitInstance.restApi)
+    private var repository: AppRepository = AppRepository(RetrofitInstance.restApi)
 
     private val _dataResult = MutableLiveData<DataResult>()
     val dataResult: LiveData<DataResult> = _dataResult
@@ -34,5 +34,10 @@ class MainViewModel : ViewModel() {
     fun getItems() = viewModelScope.launch {
         _dataResult.value = DataResult.Loading
         _dataResult.value = repository.getItems()
+    }
+
+    /* Created only for unit test cases of ViewModel to pass same instance of object */
+    fun setRepository(repository: AppRepository) {
+        this.repository = repository
     }
 }
