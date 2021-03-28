@@ -1,0 +1,288 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: MainViewModelTest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ercanduman.listanddetaildemo.ui.main</a> ]
+</div>
+
+<h1>Coverage Summary for Class: MainViewModelTest (ercanduman.listanddetaildemo.ui.main)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">MainViewModelTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (16/ 16)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">MainViewModelTest$test_call_repository_and_check_if_returns_Error_result$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainViewModelTest$test_call_repository_and_handle_Empty_result$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (8/ 8)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainViewModelTest$test_call_repository_for_Exception_of_Error_result$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/ 7)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainViewModelTest$test_call_repository_for_Exception_of_Error_result$1$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">MainViewModelTest$test_call_repository_for_Success_case$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (11/ 11)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (52/ 52)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ercanduman.listanddetaildemo.ui.main
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+<i>4</i>&nbsp;import com.google.common.truth.Truth.assertThat
+<i>5</i>&nbsp;import ercanduman.listanddetaildemo.data.model.Product
+<i>6</i>&nbsp;import ercanduman.listanddetaildemo.data.model.RestApiResponse
+<i>7</i>&nbsp;import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
+<i>8</i>&nbsp;import ercanduman.listanddetaildemo.data.model.SalePrice
+<i>9</i>&nbsp;import ercanduman.listanddetaildemo.data.network.RestApi
+<i>10</i>&nbsp;import ercanduman.listanddetaildemo.data.repository.AppRepository
+<i>11</i>&nbsp;import ercanduman.listanddetaildemo.util.DataResult
+<i>12</i>&nbsp;import ercanduman.listanddetaildemo.util.MainDispatcherRule
+<i>13</i>&nbsp;import ercanduman.listanddetaildemo.util.getOrAwaitValueTest
+<i>14</i>&nbsp;import kotlinx.coroutines.test.runBlockingTest
+<i>15</i>&nbsp;import okhttp3.ResponseBody
+<i>16</i>&nbsp;import org.junit.Before
+<i>17</i>&nbsp;import org.junit.Rule
+<i>18</i>&nbsp;import org.junit.Test
+<i>19</i>&nbsp;import org.mockito.Mockito.mock
+<i>20</i>&nbsp;import org.mockito.kotlin.whenever
+<i>21</i>&nbsp;import retrofit2.Response
+<i>22</i>&nbsp;
+<i>23</i>&nbsp;/**
+<i>24</i>&nbsp; * Contains all unit test cases for [MainViewModel] class.
+<i>25</i>&nbsp; *
+<i>26</i>&nbsp; * @author ercanduman
+<i>27</i>&nbsp; * @since 26.03.2021
+<i>28</i>&nbsp; */
+<b class="fc"><i>29</i>&nbsp;class MainViewModelTest {</b>
+<i>30</i>&nbsp;    /**
+<i>31</i>&nbsp;     * Swaps the background executor used by the Architecture Components which executes each task synchronously.
+<i>32</i>&nbsp;     */
+<i>33</i>&nbsp;    @get:Rule
+<b class="fc"><i>34</i>&nbsp;    val taskExecutorRule = InstantTaskExecutorRule()</b>
+<i>35</i>&nbsp;
+<i>36</i>&nbsp;    @get:Rule
+<b class="fc"><i>37</i>&nbsp;    val dispatcherRule = MainDispatcherRule()</b>
+<i>38</i>&nbsp;
+<i>39</i>&nbsp;    private lateinit var viewModel: MainViewModel
+<i>40</i>&nbsp;    private lateinit var repository: AppRepository
+<i>41</i>&nbsp;    private lateinit var restApi: RestApi
+<i>42</i>&nbsp;
+<i>43</i>&nbsp;    @Before
+<i>44</i>&nbsp;    fun setUp() {
+<b class="fc"><i>45</i>&nbsp;        restApi = mock(RestApi::class.java)</b>
+<b class="fc"><i>46</i>&nbsp;        repository = AppRepository(restApi)</b>
+<b class="fc"><i>47</i>&nbsp;        viewModel = MainViewModel()</b>
+<b class="fc"><i>48</i>&nbsp;        viewModel.setRepository(repository) // Same object should be used.</b>
+<b class="fc"><i>49</i>&nbsp;    }</b>
+<i>50</i>&nbsp;
+<i>51</i>&nbsp;    @Test
+<b class="fc"><i>52</i>&nbsp;    fun test_call_repository_and_handle_Empty_result() = runBlockingTest {</b>
+<b class="fc"><i>53</i>&nbsp;        val emptyResponse = RestApiResponse()</b>
+<b class="fc"><i>54</i>&nbsp;        val empty: Response&lt;RestApiResponse&gt; = Response.success(emptyResponse)</b>
+<b class="fc"><i>55</i>&nbsp;        whenever(restApi.getItems()).thenReturn(empty)</b>
+<i>56</i>&nbsp;
+<b class="fc"><i>57</i>&nbsp;        viewModel.getItems()</b>
+<i>58</i>&nbsp;
+<b class="fc"><i>59</i>&nbsp;        val result = viewModel.dataResult.getOrAwaitValueTest()</b>
+<b class="fc"><i>60</i>&nbsp;        assertThat(result).isEqualTo(DataResult.Empty)</b>
+<b class="fc"><i>61</i>&nbsp;    }</b>
+<i>62</i>&nbsp;
+<i>63</i>&nbsp;    @Test
+<b class="fc"><i>64</i>&nbsp;    fun test_call_repository_and_check_if_returns_Error_result() = runBlockingTest {</b>
+<b class="fc"><i>65</i>&nbsp;        val message = &quot;No Data Found&quot;</b>
+<b class="fc"><i>66</i>&nbsp;        val error: Response&lt;RestApiResponse&gt; =</b>
+<b class="fc"><i>67</i>&nbsp;            Response.error(500, ResponseBody.create(null, message))</b>
+<b class="fc"><i>68</i>&nbsp;        whenever(restApi.getItems()).thenReturn(error)</b>
+<i>69</i>&nbsp;
+<b class="fc"><i>70</i>&nbsp;        viewModel.getItems()</b>
+<i>71</i>&nbsp;
+<b class="fc"><i>72</i>&nbsp;        val result = viewModel.dataResult.getOrAwaitValueTest() as DataResult.Error</b>
+<b class="fc"><i>73</i>&nbsp;        assertThat(result.message).isEqualTo(AppRepository.generateErrorMessage(error))</b>
+<b class="fc"><i>74</i>&nbsp;    }</b>
+<i>75</i>&nbsp;
+<i>76</i>&nbsp;    @Test
+<b class="fc"><i>77</i>&nbsp;    fun test_call_repository_for_Success_case() = runBlockingTest {</b>
+<b class="fc"><i>78</i>&nbsp;        val product = Product(&quot;1&quot;, &quot;Desc&quot;, &quot;11&quot;, &quot;Name&quot;, SalePrice(&quot;1.1&quot;, &quot;EUR&quot;), &quot;&quot;)</b>
+<b class="fc"><i>79</i>&nbsp;        val responseItem = RestApiResponseItem(&quot;description&quot;, &quot;123&quot;, &quot;Name&quot;, listOf(product))</b>
+<i>80</i>&nbsp;
+<b class="fc"><i>81</i>&nbsp;        val apiResponse = RestApiResponse()</b>
+<b class="fc"><i>82</i>&nbsp;        apiResponse.add(responseItem)</b>
+<i>83</i>&nbsp;
+<b class="fc"><i>84</i>&nbsp;        val success: Response&lt;RestApiResponse&gt; = Response.success(200, apiResponse)</b>
+<b class="fc"><i>85</i>&nbsp;        whenever(restApi.getItems()).thenReturn(success)</b>
+<i>86</i>&nbsp;
+<b class="fc"><i>87</i>&nbsp;        viewModel.getItems()</b>
+<i>88</i>&nbsp;
+<b class="fc"><i>89</i>&nbsp;        val result = viewModel.dataResult.getOrAwaitValueTest() as DataResult.Success</b>
+<b class="fc"><i>90</i>&nbsp;        assertThat(result.data).isEqualTo(apiResponse)</b>
+<b class="fc"><i>91</i>&nbsp;    }</b>
+<i>92</i>&nbsp;
+<i>93</i>&nbsp;    @Test
+<b class="fc"><i>94</i>&nbsp;    fun test_call_repository_for_Exception_of_Error_result() = runBlockingTest {</b>
+<b class="fc"><i>95</i>&nbsp;        val errorMessage = &quot;No Data Found&quot;</b>
+<b class="fc"><i>96</i>&nbsp;        whenever(restApi.getItems()).then { throw Exception(errorMessage) }</b>
+<i>97</i>&nbsp;
+<b class="fc"><i>98</i>&nbsp;        viewModel.getItems()</b>
+<i>99</i>&nbsp;
+<b class="fc"><i>100</i>&nbsp;        val result = viewModel.dataResult.getOrAwaitValueTest() as DataResult.Error</b>
+<b class="fc"><i>101</i>&nbsp;        assertThat(result.message).isEqualTo(errorMessage)</b>
+<b class="fc"><i>102</i>&nbsp;    }</b>
+<i>103</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-03-28 19:14</div>
+</div>
+</body>
+</html>

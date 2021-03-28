@@ -12,6 +12,7 @@ import org.junit.Test
 
 /**
  * Contains Instrumentation test cases for [DetailFragment].
+ *
  * @author ercanduman
  * @since 28.03.2021
  */

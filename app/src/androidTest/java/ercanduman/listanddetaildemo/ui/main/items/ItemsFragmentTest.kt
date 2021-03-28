@@ -1,6 +1,7 @@
 package ercanduman.listanddetaildemo.ui.main.items
 
 import androidx.fragment.app.testing.launchFragmentInContainer
+import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.Espresso.pressBack
 import androidx.test.espresso.action.ViewActions.click
@@ -14,6 +15,7 @@ import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
 import ercanduman.listanddetaildemo.data.model.SalePrice
 import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.data.repository.AppRepository
+import ercanduman.listanddetaildemo.ui.main.MainActivity
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
@@ -23,6 +25,10 @@ import retrofit2.Response
 
 /**
  * Contains UI related test cases for [ItemsFragment].
+ *
+ * If you got an error such as: "Can not perform this action after onSaveInstanceState",
+ * Make sure the device you are running the tests on is unlocked. If the screen is off or at the
+ * lock screen you will get a stack trace that looks roughly like this
  *
  * @author ercanduman
  * @since 26.03.2021
@@ -43,7 +49,9 @@ class ItemsFragmentTest {
 
     @Test
     fun test_check_if_child_views_displayed() {
-        launchFragmentInContainer<ItemsFragment>()
+        launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar) {
+            ItemsFragment()
+        }
 
         onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
         onView(withId(R.id.progress_bar_items)).check(matches(isDisplayed()))
@@ -51,7 +59,7 @@ class ItemsFragmentTest {
     }
 
     @Test
-    fun test_with_data() = runBlockingTest {
+    fun test_items_fragment_with_sample_data() = runBlockingTest {
         val productName = "Default Product Name"
         val product = Product("1", "Desc", "11", productName, SalePrice("1.1", "EUR"), "")
         val responseItem = RestApiResponseItem("description", "123", "Name", listOf(product))
@@ -76,9 +84,11 @@ class ItemsFragmentTest {
 
     @Test
     fun test_click_on_a_item_and_navigate_to_DetailFragment() {
-        launchFragmentInContainer<ItemsFragment>()
+        ActivityScenario.launch(MainActivity::class.java)
 
         val firstItemPosition = 0
+
+        onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
 
         onView(withId(R.id.recycler_view_items))
             .perform(actionOnItemAtPosition<ItemsAdapter.ProductHolder>(firstItemPosition, click()))
@@ -88,7 +98,7 @@ class ItemsFragmentTest {
 
     @Test
     fun test_click_on_a_item_and_navigate_to_DetailFragment_and_check_items_displayed() {
-        launchFragmentInContainer<ItemsFragment>()
+        ActivityScenario.launch(MainActivity::class.java)
 
         val firstItemPosition = 0
 
