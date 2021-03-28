@@ -2,7 +2,10 @@ package ercanduman.listanddetaildemo.ui.main.items
 
 import androidx.fragment.app.testing.launchFragmentInContainer
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.Espresso.pressBack
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
+import androidx.test.espresso.contrib.RecyclerViewActions.actionOnItemAtPosition
 import androidx.test.espresso.matcher.ViewMatchers.*
 import ercanduman.listanddetaildemo.R
 import ercanduman.listanddetaildemo.data.model.Product
@@ -49,11 +52,8 @@ class ItemsFragmentTest {
 
     @Test
     fun test_with_data() = runBlockingTest {
-        launchFragmentInContainer<ItemsFragment>(
-            themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
-        )
-
-        val product = Product("1", "Desc", "11", "Name", SalePrice("1.1", "EUR"), "")
+        val productName = "Default Product Name"
+        val product = Product("1", "Desc", "11", productName, SalePrice("1.1", "EUR"), "")
         val responseItem = RestApiResponseItem("description", "123", "Name", listOf(product))
 
         val apiResponse = RestApiResponse()
@@ -62,11 +62,22 @@ class ItemsFragmentTest {
         val success: Response<RestApiResponse> = Response.success(200, apiResponse)
         Mockito.`when`(restApi.getItems()).thenReturn(success)
 
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
+        ) {
+            ItemsFragment().also {
+                viewModel.setRepository(repository)
+                it.viewModel = viewModel
+            }
+        }
+
         onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
     }
 
     @Test
     fun test_click_on_a_item_and_navigate_to_DetailFragment() {
+        launchFragmentInContainer<ItemsFragment>()
+
         val firstItemPosition = 0
 
         onView(withId(R.id.recycler_view_items))
@@ -77,6 +88,8 @@ class ItemsFragmentTest {
 
     @Test
     fun test_click_on_a_item_and_navigate_to_DetailFragment_and_check_items_displayed() {
+        launchFragmentInContainer<ItemsFragment>()
+
         val firstItemPosition = 0
 
         onView(withId(R.id.recycler_view_items))

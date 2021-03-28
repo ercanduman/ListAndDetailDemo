@@ -3,9 +3,10 @@ package ercanduman.listanddetaildemo.ui.main.items
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ercanduman.listanddetaildemo.R
 import ercanduman.listanddetaildemo.data.model.Product
@@ -19,7 +20,8 @@ import ercanduman.listanddetaildemo.util.DataResult
  */
 class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductClickListener {
 
-    private val viewModel: MainViewModel by viewModels()
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentItemsBinding
 
     private val productAdapter = ItemsAdapter(this)
@@ -27,6 +29,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentItemsBinding.bind(view)
 
+        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
         viewModel.getItems()
         getData()
     }
