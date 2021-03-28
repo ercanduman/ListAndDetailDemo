@@ -3,6 +3,7 @@ package ercanduman.listanddetaildemo.ui.main.items
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.annotation.VisibleForTesting
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -19,7 +20,8 @@ import ercanduman.listanddetaildemo.util.DataResult
  */
 class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductClickListener {
 
-    private lateinit var viewModel: MainViewModel
+    @VisibleForTesting(otherwise = VisibleForTesting.PRIVATE)
+    lateinit var viewModel: MainViewModel
     private lateinit var binding: FragmentItemsBinding
 
     private val productAdapter = ItemsAdapter(this)
@@ -37,7 +39,7 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
             when (result) {
                 is DataResult.Empty -> displayItems(message = getString(R.string.no_data_found))
                 is DataResult.Error -> displayItems(message = result.message)
-                is DataResult.Loading -> binding.progressBar.isVisible = true
+                is DataResult.Loading -> binding.progressBarItems.isVisible = true
                 is DataResult.Success -> handleData(result.data)
             }
         }
@@ -45,10 +47,10 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
 
     private fun displayItems(message: String = "") {
         binding.apply {
-            progressBar.isVisible = false
+            progressBarItems.isVisible = false
             recyclerViewItems.isVisible = message.isEmpty()
-            tvError.isVisible = message.isNotEmpty()
-            tvError.text = message
+            tvErrorItems.isVisible = message.isNotEmpty()
+            tvErrorItems.text = message
         }
     }
 

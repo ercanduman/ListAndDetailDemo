@@ -4,9 +4,11 @@ import androidx.test.espresso.Espresso.onView
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.rules.ActivityScenarioRule
+import androidx.test.ext.junit.runners.AndroidJUnit4
 import ercanduman.listanddetaildemo.R
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 
 /**
  * Contains UI related test cases for [MainActivity].
@@ -14,6 +16,7 @@ import org.junit.Test
  * @author ercanduman
  * @since 26.03.2021
  */
+@RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
     /**
