@@ -1,0 +1,121 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: RestApi</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ercanduman.listanddetaildemo.data.network</a> ]
+</div>
+
+<h1>Coverage Summary for Class: RestApi (ercanduman.listanddetaildemo.data.network)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+  <tr>
+    <td class="name">RestApi$Companion</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">RestApi$MockitoMock$2035538905</td>
+  </tr>
+  <tr>
+    <td class="name">RestApi$MockitoMock$2035538905$auxiliary$8VCKJCSe</td>
+  </tr>
+  <tr>
+    <td class="name">RestApi$MockitoMock$2035538905$auxiliary$J9JRIlMp</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ercanduman.listanddetaildemo.data.network
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import ercanduman.listanddetaildemo.data.model.RestApiResponse
+<i>4</i>&nbsp;import retrofit2.Response
+<i>5</i>&nbsp;import retrofit2.http.GET
+<i>6</i>&nbsp;
+<i>7</i>&nbsp;/**
+<i>8</i>&nbsp; * Connects to URL and retrieves data from web server.
+<i>9</i>&nbsp; *
+<i>10</i>&nbsp; * @author ercanduman
+<i>11</i>&nbsp; * @since  25.03.2021
+<i>12</i>&nbsp; */
+<i>13</i>&nbsp;interface RestApi {
+<i>14</i>&nbsp;
+<b class="fc"><i>15</i>&nbsp;    companion object {</b>
+<i>16</i>&nbsp;        const val BASE_URL = &quot;http://mobcategories.s3-website-eu-west-1.amazonaws.com&quot;
+<i>17</i>&nbsp;    }
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;    @GET(&quot;/&quot;)
+<i>20</i>&nbsp;    suspend fun getItems(): Response&lt;RestApiResponse&gt;
+<i>21</i>&nbsp;
+<i>22</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-03-28 19:14</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,246 @@
+
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html id="htmlId">
+<head>
+  <title>Coverage Report :: AppRepositoryTest</title>
+  <style type="text/css">
+    @import "../../.css/coverage.css";
+  </style>
+</head>
+
+<body>
+<div class="header"></div>
+
+<div class="content">
+<div class="breadCrumbs">
+    [ <a href="../../index.html">all classes</a> ]
+    [ <a href="../index.html">ercanduman.listanddetaildemo.data.repository</a> ]
+</div>
+
+<h1>Coverage Summary for Class: AppRepositoryTest (ercanduman.listanddetaildemo.data.repository)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AppRepositoryTest</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (6/ 6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (23/ 23)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AppRepositoryTest$test_call_API_forEmptyRetrofitResponse$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AppRepositoryTest$test_call_API_forErrorRetrofitResponse$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (12/ 12)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AppRepositoryTest$test_call_API_forSuccessRetrofitResponse$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (13/ 13)
+  </span>
+</td>
+  </tr>
+  <tr>
+    <td class="name">AppRepositoryTest$test_call_API_forUnknownException$1</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/ 1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (9/ 9)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/ 10)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (67/ 67)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<div class="sourceCode"><i>1</i>&nbsp;package ercanduman.listanddetaildemo.data.repository
+<i>2</i>&nbsp;
+<i>3</i>&nbsp;import com.google.common.truth.Truth.assertThat
+<i>4</i>&nbsp;import ercanduman.listanddetaildemo.data.model.Product
+<i>5</i>&nbsp;import ercanduman.listanddetaildemo.data.model.RestApiResponse
+<i>6</i>&nbsp;import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
+<i>7</i>&nbsp;import ercanduman.listanddetaildemo.data.model.SalePrice
+<i>8</i>&nbsp;import ercanduman.listanddetaildemo.data.network.RestApi
+<i>9</i>&nbsp;import ercanduman.listanddetaildemo.util.DataResult
+<i>10</i>&nbsp;import kotlinx.coroutines.test.runBlockingTest
+<i>11</i>&nbsp;import okhttp3.ResponseBody
+<i>12</i>&nbsp;import org.junit.Before
+<i>13</i>&nbsp;import org.junit.Test
+<i>14</i>&nbsp;import org.mockito.Mockito
+<i>15</i>&nbsp;import org.mockito.kotlin.whenever
+<i>16</i>&nbsp;import retrofit2.Response
+<i>17</i>&nbsp;
+<i>18</i>&nbsp;
+<i>19</i>&nbsp;/**
+<i>20</i>&nbsp; * Stored [AppRepository] relates unit test cases.
+<i>21</i>&nbsp; *
+<i>22</i>&nbsp; * @author ercanduman
+<b class="fc"><i>23</i>&nbsp; * @since 26.03.2021</b>
+<i>24</i>&nbsp; */
+<b class="fc"><i>25</i>&nbsp;class AppRepositoryTest {</b>
+<i>26</i>&nbsp;
+<i>27</i>&nbsp;    private lateinit var repository: AppRepository
+<i>28</i>&nbsp;    private lateinit var restApi: RestApi
+<i>29</i>&nbsp;
+<b class="fc"><i>30</i>&nbsp;    @Before</b>
+<b class="fc"><i>31</i>&nbsp;    fun setUp() {</b>
+<b class="fc"><i>32</i>&nbsp;        restApi = Mockito.mock(RestApi::class.java)</b>
+<b class="fc"><i>33</i>&nbsp;        repository = AppRepository(restApi)</b>
+<b class="fc"><i>34</i>&nbsp;    }</b>
+<b class="fc"><i>35</i>&nbsp;</b>
+<b class="fc"><i>36</i>&nbsp;    @Test</b>
+<b class="fc"><i>37</i>&nbsp;    fun test_call_API_forErrorRetrofitResponse() = runBlockingTest {</b>
+<b class="fc"><i>38</i>&nbsp;        val message = &quot;No Data Found&quot;</b>
+<b class="fc"><i>39</i>&nbsp;        val error: Response&lt;RestApiResponse&gt; =</b>
+<b class="fc"><i>40</i>&nbsp;            Response.error(500, ResponseBody.create(null, message))</b>
+<b class="fc"><i>41</i>&nbsp;        whenever(restApi.getItems()).thenReturn(error)</b>
+<b class="fc"><i>42</i>&nbsp;</b>
+<b class="fc"><i>43</i>&nbsp;        val dataResult = repository.getItems() as DataResult.Error</b>
+<b class="fc"><i>44</i>&nbsp;        val result = AppRepository.generateErrorMessage(error)</b>
+<b class="fc"><i>45</i>&nbsp;        assertThat(dataResult.message).isEqualTo(result)</b>
+<b class="fc"><i>46</i>&nbsp;    }</b>
+<b class="fc"><i>47</i>&nbsp;</b>
+<b class="fc"><i>48</i>&nbsp;    @Test</b>
+<b class="fc"><i>49</i>&nbsp;    fun test_call_API_forUnknownException() = runBlockingTest {</b>
+<b class="fc"><i>50</i>&nbsp;        val errorMessage = &quot;An unknown error occurred...&quot;</b>
+<b class="fc"><i>51</i>&nbsp;        whenever(restApi.getItems()).thenThrow(RuntimeException::class.java)</b>
+<b class="fc"><i>52</i>&nbsp;</b>
+<b class="fc"><i>53</i>&nbsp;        val dataResult = repository.getItems() as DataResult.Error</b>
+<b class="fc"><i>54</i>&nbsp;        assertThat(dataResult.message).isEqualTo(errorMessage)</b>
+<b class="fc"><i>55</i>&nbsp;    }</b>
+<b class="fc"><i>56</i>&nbsp;</b>
+<b class="fc"><i>57</i>&nbsp;    @Test</b>
+<b class="fc"><i>58</i>&nbsp;    fun test_call_API_forEmptyRetrofitResponse() = runBlockingTest {</b>
+<b class="fc"><i>59</i>&nbsp;        val emptyResponse = RestApiResponse()</b>
+<b class="fc"><i>60</i>&nbsp;        val empty: Response&lt;RestApiResponse&gt; = Response.success(emptyResponse)</b>
+<b class="fc"><i>61</i>&nbsp;        whenever(restApi.getItems()).thenReturn(empty)</b>
+<b class="fc"><i>62</i>&nbsp;</b>
+<b class="fc"><i>63</i>&nbsp;        val dataResult = repository.getItems() as DataResult.Empty</b>
+<b class="fc"><i>64</i>&nbsp;        assertThat(dataResult).isEqualTo(DataResult.Empty)</b>
+<b class="fc"><i>65</i>&nbsp;    }</b>
+<b class="fc"><i>66</i>&nbsp;</b>
+<b class="fc"><i>67</i>&nbsp;    @Test</b>
+<b class="fc"><i>68</i>&nbsp;    fun test_call_API_forSuccessRetrofitResponse() = runBlockingTest {</b>
+<b class="fc"><i>69</i>&nbsp;        val product = Product(&quot;1&quot;, &quot;Desc&quot;, &quot;11&quot;, &quot;Name&quot;, SalePrice(&quot;1.1&quot;, &quot;EUR&quot;), &quot;&quot;)</b>
+<b class="fc"><i>70</i>&nbsp;        val responseItem = RestApiResponseItem(&quot;description&quot;, &quot;123&quot;, &quot;Name&quot;, listOf(product))</b>
+<b class="fc"><i>71</i>&nbsp;        val apiResponse = RestApiResponse()</b>
+<b class="fc"><i>72</i>&nbsp;        apiResponse.add(responseItem)</b>
+<i>73</i>&nbsp;
+<b class="fc"><i>74</i>&nbsp;        val success: Response&lt;RestApiResponse&gt; = Response.success(200, apiResponse)</b>
+<b class="fc"><i>75</i>&nbsp;        whenever(restApi.getItems()).thenReturn(success)</b>
+<b class="fc"><i>76</i>&nbsp;</b>
+<b class="fc"><i>77</i>&nbsp;        val dataResult = repository.getItems() as DataResult.Success</b>
+<b class="fc"><i>78</i>&nbsp;        assertThat(dataResult.data).isEqualTo(apiResponse)</b>
+<b class="fc"><i>79</i>&nbsp;    }</b>
+<i>80</i>&nbsp;}
+</div>
+</div>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2021-03-28 19:14</div>
+</div>
+</body>
+</html>
