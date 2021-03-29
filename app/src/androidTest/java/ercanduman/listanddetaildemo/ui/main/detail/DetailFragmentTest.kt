@@ -28,7 +28,7 @@ class DetailFragmentTest {
     }
 
     @Test
-    fun test_launch_detail_fragment_and_check_child_views() {
+    fun test_launch_detail_fragment_and_check_child_views_visibility() {
         val product = Product("1", "Desc", "11", "name", SalePrice("1.1", "EUR"), "")
 
         val bundle = Bundle()
