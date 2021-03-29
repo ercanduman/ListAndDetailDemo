@@ -26,17 +26,17 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
         val product: Product = args.product
 
         binding.apply {
-            binding.productName.setContent(product.name)
-            binding.productDescription.setContent(product.description)
+            productName.setContent(product.name)
+            productDescription.setContent(product.description)
 
             val priceText = "${product.salePrice.currency} ${product.salePrice.amount}"
-            binding.productPrice.setContent(priceText)
+            productPrice.setContent(priceText)
 
             Glide.with(this@DetailFragment)
                 .load(RestApi.BASE_URL + product.url)
                 .centerCrop()
                 .error(R.drawable.ic_error_outline)
-                .into(binding.productImage)
+                .into(productImage)
         }
     }
 
