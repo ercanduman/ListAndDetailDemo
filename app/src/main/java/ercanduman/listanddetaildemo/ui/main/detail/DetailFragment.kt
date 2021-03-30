@@ -27,7 +27,6 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
 
         binding.apply {
             productName.setContent(product.name)
-            productDescription.setContent(product.description)
 
             val priceText = "${product.salePrice.currency} ${product.salePrice.amount}"
             productPrice.setContent(priceText)
