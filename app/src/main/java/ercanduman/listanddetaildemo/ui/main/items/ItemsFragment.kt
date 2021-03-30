@@ -56,9 +56,8 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
 
     private fun handleData(data: RestApiResponse) {
         displayItems()
-        val mutableList = mutableListOf<Product>()
-        data.forEach { item -> mutableList.addAll(item.products) }
-        productAdapter.submitList(mutableList)
+        val items = data.flatMap { category -> category.products }
+        productAdapter.submitList(items)
         initRecyclerView()
     }
 
