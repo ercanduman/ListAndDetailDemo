@@ -37,7 +37,6 @@ class DetailFragmentTest {
 
         onView(withId(R.id.product_image)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.product_name)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.product_description)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withId(R.id.product_price)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
     }
 
@@ -55,8 +54,9 @@ class DetailFragmentTest {
         onView(withId(R.id.product_name)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
         onView(withText(productName)).check(matches(isDisplayed()))
 
-        onView(withId(R.id.product_description)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withText(productDesc)).check(matches(isDisplayed()))
+        onView(withId(R.id.product_price)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        val priceText = "${product.salePrice.currency} ${product.salePrice.amount}"
+        onView(withText(priceText)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -71,9 +71,11 @@ class DetailFragmentTest {
         launchFragmentInContainer<DetailFragment>(fragmentArgs = bundle)
 
         onView(withId(R.id.product_name)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
-        onView(withId(R.id.product_description)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
+        onView(withId(R.id.product_price)).check(matches(withEffectiveVisibility(Visibility.VISIBLE)))
 
         onView(withId(R.id.product_name)).check(matches(withText(productName)))
-        onView(withId(R.id.product_description)).check(matches(withText(productDesc)))
+
+        val priceText = "${product.salePrice.currency} ${product.salePrice.amount}"
+        onView(withId(R.id.product_price)).check(matches(withText(priceText)))
     }
 }
