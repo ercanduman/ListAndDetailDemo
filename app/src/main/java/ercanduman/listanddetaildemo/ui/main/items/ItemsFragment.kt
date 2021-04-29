@@ -9,10 +9,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import ercanduman.listanddetaildemo.R
+import ercanduman.listanddetaildemo.data.internal.RetrofitInstance
 import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
+import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.databinding.FragmentItemsBinding
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
+import ercanduman.listanddetaildemo.ui.main.MainViewModelFactory
 import ercanduman.listanddetaildemo.util.DataResult
 
 /**
@@ -29,9 +32,15 @@ class ItemsFragment : Fragment(R.layout.fragment_items), ItemsAdapter.OnProductC
         super.onViewCreated(view, savedInstanceState)
         binding = FragmentItemsBinding.bind(view)
 
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        initViewModel()
         viewModel.getItems()
         getData()
+    }
+
+    private fun initViewModel() {
+        val repository = AppRepository(RetrofitInstance.restApi)
+        val factory = MainViewModelFactory(repository)
+        viewModel = ViewModelProvider(this, factory).get(MainViewModel::class.java)
     }
 
     private fun getData() {

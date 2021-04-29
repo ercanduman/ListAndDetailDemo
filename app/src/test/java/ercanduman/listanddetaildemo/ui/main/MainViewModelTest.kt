@@ -6,19 +6,16 @@ import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
 import ercanduman.listanddetaildemo.data.model.SalePrice
-import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.util.DataResult
 import ercanduman.listanddetaildemo.util.MainDispatcherRule
 import ercanduman.listanddetaildemo.util.getOrAwaitValueTest
 import kotlinx.coroutines.test.runBlockingTest
-import okhttp3.ResponseBody
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.whenever
-import retrofit2.Response
 
 /**
  * Contains all unit test cases for [MainViewModel] class.
@@ -38,21 +35,16 @@ class MainViewModelTest {
 
     private lateinit var viewModel: MainViewModel
     private lateinit var repository: AppRepository
-    private lateinit var restApi: RestApi
 
     @Before
     fun setUp() {
-        restApi = mock(RestApi::class.java)
-        repository = AppRepository(restApi)
-        viewModel = MainViewModel()
-        viewModel.setRepository(repository) // Same object should be used.
+        repository = mock(AppRepository::class.java)
+        viewModel = MainViewModel(repository)
     }
 
     @Test
     fun test_call_repository_and_handle_Empty_result() = runBlockingTest {
-        val emptyResponse = RestApiResponse()
-        val empty: Response<RestApiResponse> = Response.success(emptyResponse)
-        whenever(restApi.getItems()).thenReturn(empty)
+        whenever(repository.getItems()).thenReturn(DataResult.Empty)
 
         viewModel.getItems()
 
@@ -63,14 +55,12 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_and_check_if_returns_Error_result() = runBlockingTest {
         val message = "No Data Found"
-        val error: Response<RestApiResponse> =
-            Response.error(500, ResponseBody.create(null, message))
-        whenever(restApi.getItems()).thenReturn(error)
+        whenever(repository.getItems()).thenReturn(DataResult.Error(message))
 
         viewModel.getItems()
 
         val result = viewModel.dataResult.getOrAwaitValueTest() as DataResult.Error
-        assertThat(result.message).isEqualTo(AppRepository.generateErrorMessage(error))
+        assertThat(result.message).isEqualTo(message)
     }
 
     @Test
@@ -81,8 +71,7 @@ class MainViewModelTest {
         val apiResponse = RestApiResponse()
         apiResponse.add(responseItem)
 
-        val success: Response<RestApiResponse> = Response.success(200, apiResponse)
-        whenever(restApi.getItems()).thenReturn(success)
+        whenever(repository.getItems()).thenReturn(DataResult.Success(apiResponse))
 
         viewModel.getItems()
 
@@ -93,7 +82,7 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_for_Exception_of_Error_result() = runBlockingTest {
         val errorMessage = "No Data Found"
-        whenever(restApi.getItems()).then { throw Exception(errorMessage) }
+        whenever(repository.getItems()).thenReturn(DataResult.Error(errorMessage))
 
         viewModel.getItems()
 
