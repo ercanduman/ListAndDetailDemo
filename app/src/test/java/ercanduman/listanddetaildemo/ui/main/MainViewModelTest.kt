@@ -39,8 +39,7 @@ class MainViewModelTest {
     @Before
     fun setUp() {
         repository = mock(AppRepository::class.java)
-        viewModel = MainViewModel()
-        viewModel.setRepository(repository) // Same object should be used.
+        viewModel = MainViewModel(repository)
     }
 
     @Test

@@ -43,8 +43,7 @@ class ItemsFragmentTest {
     fun setUp() {
         restApi = Mockito.mock(RestApi::class.java)
         repository = AppRepository(restApi)
-        viewModel = MainViewModel()
-        viewModel.setRepository(repository) // Same object should be used.
+        viewModel = MainViewModel(repository)
     }
 
     @Test
@@ -74,7 +73,6 @@ class ItemsFragmentTest {
             themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
         ) {
             ItemsFragment().also {
-                viewModel.setRepository(repository)
                 it.viewModel = viewModel
             }
         }
