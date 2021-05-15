@@ -3,6 +3,8 @@ package ercanduman.listanddetaildemo.data.repository
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.util.DataResult
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 import retrofit2.Response
 
 /**
@@ -13,20 +15,23 @@ import retrofit2.Response
  */
 class AppRepository(private val api: RestApi) {
 
-    suspend fun getItems(): DataResult = try {
-        val result = api.getItems()
-        if (result.isSuccessful) {
-            val resultBody = result.body()
-            if (resultBody != null && resultBody.isNotEmpty()) {
-                DataResult.Success(resultBody)
+    suspend fun getItems(): Flow<DataResult> = flow {
+        emit(DataResult.Loading)
+        try {
+            val result = api.getItems()
+            if (result.isSuccessful) {
+                val resultBody = result.body()
+                if (resultBody != null && resultBody.isNotEmpty()) {
+                    emit(DataResult.Success(resultBody))
+                } else {
+                    emit(DataResult.Empty)
+                }
             } else {
-                DataResult.Empty
+                emit(DataResult.Error(generateErrorMessage(result)))
             }
-        } else {
-            DataResult.Error(generateErrorMessage(result))
+        } catch (e: Exception) {
+            emit(DataResult.Error(e.message ?: "An unknown error occurred..."))
         }
-    } catch (e: Exception) {
-        DataResult.Error(e.message ?: "An unknown error occurred...")
     }
 
     companion object {

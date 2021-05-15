@@ -6,6 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.util.DataResult
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 /**
@@ -32,7 +33,9 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
     val dataResult: LiveData<DataResult> = _dataResult
 
     fun getItems() = viewModelScope.launch {
-        _dataResult.value = DataResult.Loading
-        _dataResult.value = repository.getItems()
+        _dataResult.value = DataResult.Empty
+        repository.getItems().collect {
+            _dataResult.value = it
+        }
     }
 }
