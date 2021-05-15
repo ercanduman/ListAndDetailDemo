@@ -10,13 +10,13 @@ import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.util.DataResult
 import ercanduman.listanddetaildemo.util.MainDispatcherRule
 import ercanduman.listanddetaildemo.util.getOrAwaitValueTest
+import io.mockk.coEvery
+import io.mockk.mockk
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.kotlin.whenever
 
 /**
  * Contains all unit test cases for [MainViewModel] class.
@@ -39,14 +39,13 @@ class MainViewModelTest {
 
     @Before
     fun setUp() {
-        repository = mock(AppRepository::class.java)
+        repository = mockk()
         viewModel = MainViewModel(repository)
     }
 
     @Test
     fun test_call_repository_and_handle_Empty_result() = runBlockingTest {
-        whenever(repository.getItems()).thenReturn(flowOf(DataResult.Empty))
-
+        coEvery { repository.getItems() } returns flowOf(DataResult.Empty)
         viewModel.getItems()
 
         val result = viewModel.dataResult.getOrAwaitValueTest()
@@ -56,7 +55,7 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_and_check_if_returns_Error_result() = runBlockingTest {
         val message = "No Data Found"
-        whenever(repository.getItems()).thenReturn(flowOf(DataResult.Error(message)))
+        coEvery { repository.getItems() } returns flowOf(DataResult.Error(message))
 
         viewModel.getItems()
 
@@ -72,7 +71,7 @@ class MainViewModelTest {
         val apiResponse = RestApiResponse()
         apiResponse.add(responseItem)
 
-        whenever(repository.getItems()).thenReturn(flowOf(DataResult.Success(apiResponse)))
+        coEvery { repository.getItems() } returns flowOf(DataResult.Success(apiResponse))
 
         viewModel.getItems()
 
@@ -83,7 +82,7 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_for_Exception_of_Error_result() = runBlockingTest {
         val errorMessage = "No Data Found"
-        whenever(repository.getItems()).thenReturn(flowOf(DataResult.Error(errorMessage)))
+        coEvery { repository.getItems() } returns flowOf(DataResult.Error(errorMessage))
 
         viewModel.getItems()
 

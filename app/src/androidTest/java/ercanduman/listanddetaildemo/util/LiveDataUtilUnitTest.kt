@@ -18,7 +18,7 @@ import java.util.concurrent.TimeoutException
  */
 
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-fun <T> LiveData<T>.getOrAwaitValueTest(
+fun <T> LiveData<T>.getOrAwaitValueAndroidTest(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
     afterObserve: () -> Unit = {}
@@ -29,7 +29,7 @@ fun <T> LiveData<T>.getOrAwaitValueTest(
         override fun onChanged(o: T?) {
             data = o
             latch.countDown()
-            this@getOrAwaitValueTest.removeObserver(this)
+            this@getOrAwaitValueAndroidTest.removeObserver(this)
         }
     }
     this.observeForever(observer)
@@ -53,7 +53,7 @@ fun <T> LiveData<T>.getOrAwaitValueTest(
 /**
  * Observes a [LiveData] until the `block` is done executing.
  */
-fun <T> LiveData<T>.observeForTesting(block: () -> Unit) {
+fun <T> LiveData<T>.observeForAndroidTesting(block: () -> Unit) {
     val observer = Observer<T> { }
     try {
         observeForever(observer)
