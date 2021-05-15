@@ -46,7 +46,6 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_and_handle_Empty_result() = runBlockingTest {
         coEvery { repository.getItems() } returns flowOf(DataResult.Empty)
-
         viewModel.getItems()
 
         val result = viewModel.dataResult.getOrAwaitValueTest()
