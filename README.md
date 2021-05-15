@@ -53,4 +53,37 @@ Code coverage report's screenshot is as follow
 ![](https://raw.githubusercontent.com/ercanduman/ListAndDetailDemo/master/reports/Screen%20Shot%20Code%20Coverage_2021-03-28%20at%2019.16.21.png)
 
 
-Notice: If you got an error such as: "Can not perform this action after onSaveInstanceState", Make sure the device you are running the tests on is unlocked and has an active network. If the screen is off or at the lock screen you will get a stack trace that looks roughly like this.
+## Build
+This application uses the Gradle build system. To build this project use "Import Project" in Android Studio and use the following command.
+
+`./gradlew build`
+
+
+## Test
+Test suite classes created for running all instrumentation and unit test classes with a single click.
+
+You can also target a specific build variant using the following syntax.
+
+For local **unit **tests:
+
+`./gradlew testDebugUnitTest`
+
+For **instrumented** unit tests:
+
+`./gradlew connectedAndroidTest`
+
+### Test with ADB command
+
+If you would like to run a specific test in a test class, following command can be used.
+> adb shell am instrument -w -m  --no-window-animation  -e debug false -e class 'ercanduman.listanddetaildemo.ui.main.MainActivityTest#test_activity_launched' ercanduman.listanddetaildemo.debug.test/androidx.test.runner.AndroidJUnitRunner`
+
+This command runs the test_activity_launched test case inside the MainActivityTest test class.
+
+All test cases in a class:
+> adb shell am instrument -w -m  --no-window-animation  -e debug false -e class 'ercanduman.listanddetaildemo.ui.main.MainActivityTest' ercanduman.listanddetaildemo.debug.test/androidx.test.runner.AndroidJUnitRunner
+
+Notice: Before running command make sure that your device is up and running. To check running devices following command can be used.
+> adb devices
+
+
+**Notice**: If you got an error such as: "Can not perform this action after onSaveInstanceState", Make sure the device you are running the tests on is unlocked and has an active network. If the screen is off or at the lock screen you will get a stack trace that looks roughly like this.
