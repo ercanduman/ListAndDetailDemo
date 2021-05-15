@@ -9,6 +9,7 @@ import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.util.DataResult
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.toList
 import kotlinx.coroutines.test.runBlockingTest
 import okhttp3.ResponseBody
 import org.junit.Before
@@ -40,9 +41,10 @@ class AppRepositoryTest {
             Response.error(500, ResponseBody.create(null, message))
         coEvery { restApi.getItems() } returns error
 
-        val dataResult = repository.getItems() as DataResult.Error
+        // To collect second emitted flow value, toList()[1] should be used.
+        val dataResult: DataResult = repository.getItems().toList()[1]
         val result = AppRepository.generateErrorMessage(error)
-        assertThat(dataResult.message).isEqualTo(result)
+        assertThat((dataResult as DataResult.Error).message).isEqualTo(result)
     }
 
     @Test
@@ -50,8 +52,8 @@ class AppRepositoryTest {
         val errorMessage = "An unknown error occurred..."
         coEvery { restApi.getItems() } throws RuntimeException(errorMessage)
 
-        val dataResult = repository.getItems() as DataResult.Error
-        assertThat(dataResult.message).isEqualTo(errorMessage)
+        val dataResult: DataResult = repository.getItems().toList()[1]
+        assertThat((dataResult as DataResult.Error).message).isEqualTo(errorMessage)
     }
 
     @Test
@@ -60,7 +62,7 @@ class AppRepositoryTest {
         val empty: Response<RestApiResponse> = Response.success(emptyResponse)
         coEvery { restApi.getItems() } returns empty
 
-        val dataResult = repository.getItems() as DataResult.Empty
+        val dataResult: DataResult = repository.getItems().toList()[1]
         assertThat(dataResult).isEqualTo(DataResult.Empty)
     }
 
@@ -74,7 +76,7 @@ class AppRepositoryTest {
         val success: Response<RestApiResponse> = Response.success(200, apiResponse)
         coEvery { restApi.getItems() } returns success
 
-        val dataResult = repository.getItems() as DataResult.Success
-        assertThat(dataResult.data).isEqualTo(apiResponse)
+        val dataResult: DataResult = repository.getItems().toList()[1]
+        assertThat((dataResult as DataResult.Success).data).isEqualTo(apiResponse)
     }
 }

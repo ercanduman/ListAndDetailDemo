@@ -20,6 +20,7 @@ import ercanduman.listanddetaildemo.util.DataResult
 import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
@@ -87,7 +88,7 @@ class ItemsFragmentTest {
 
         val repository: AppRepository = mockk()
         val mainViewModel = MainViewModel(repository)
-        coEvery { repository.getItems() } returns DataResult.Success(apiResponse)
+        coEvery { repository.getItems() } returns flowOf(DataResult.Success(apiResponse))
 
         mainViewModel.getItems()
         coVerify { repository.getItems() }

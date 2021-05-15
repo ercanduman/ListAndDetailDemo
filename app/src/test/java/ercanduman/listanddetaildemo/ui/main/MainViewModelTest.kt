@@ -12,6 +12,7 @@ import ercanduman.listanddetaildemo.util.MainDispatcherRule
 import ercanduman.listanddetaildemo.util.getOrAwaitValueTest
 import io.mockk.coEvery
 import io.mockk.mockk
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Before
 import org.junit.Rule
@@ -44,7 +45,7 @@ class MainViewModelTest {
 
     @Test
     fun test_call_repository_and_handle_Empty_result() = runBlockingTest {
-        coEvery { repository.getItems() } returns DataResult.Empty
+        coEvery { repository.getItems() } returns flowOf(DataResult.Empty)
 
         viewModel.getItems()
 
@@ -55,7 +56,7 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_and_check_if_returns_Error_result() = runBlockingTest {
         val message = "No Data Found"
-        coEvery { repository.getItems() } returns DataResult.Error(message)
+        coEvery { repository.getItems() } returns flowOf(DataResult.Error(message))
 
         viewModel.getItems()
 
@@ -71,7 +72,7 @@ class MainViewModelTest {
         val apiResponse = RestApiResponse()
         apiResponse.add(responseItem)
 
-        coEvery { repository.getItems() } returns DataResult.Success(apiResponse)
+        coEvery { repository.getItems() } returns flowOf(DataResult.Success(apiResponse))
 
         viewModel.getItems()
 
@@ -82,7 +83,7 @@ class MainViewModelTest {
     @Test
     fun test_call_repository_for_Exception_of_Error_result() = runBlockingTest {
         val errorMessage = "No Data Found"
-        coEvery { repository.getItems() } returns DataResult.Error(errorMessage)
+        coEvery { repository.getItems() } returns flowOf(DataResult.Error(errorMessage))
 
         viewModel.getItems()
 
