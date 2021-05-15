@@ -17,11 +17,11 @@ import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.ui.main.MainActivity
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
 import ercanduman.listanddetaildemo.util.DataResult
+import io.mockk.coEvery
+import io.mockk.coVerify
+import io.mockk.mockk
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.verify
-import org.mockito.kotlin.whenever
 
 /**
  * Contains UI related test cases for [ItemsFragment].
@@ -76,7 +76,6 @@ class ItemsFragmentTest {
         onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
     }
 
-
     @Test
     fun test_items_fragment_with_sample_data_from_viewModel() = runBlockingTest {
         val productName = "Default Product Name"
@@ -86,12 +85,12 @@ class ItemsFragmentTest {
         val apiResponse = RestApiResponse()
         apiResponse.add(responseItem)
 
-        val repository: AppRepository = mock(AppRepository::class.java)
+        val repository: AppRepository = mockk()
         val mainViewModel = MainViewModel(repository)
-        whenever(repository.getItems()).thenReturn(DataResult.Success(apiResponse))
+        coEvery { repository.getItems() } returns DataResult.Success(apiResponse)
 
         mainViewModel.getItems()
-        verify(repository.getItems())
+        coVerify { repository.getItems() }
 
         launchFragmentInContainer(
             themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
