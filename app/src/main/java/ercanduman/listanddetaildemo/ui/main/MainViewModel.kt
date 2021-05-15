@@ -34,8 +34,6 @@ class MainViewModel(private val repository: AppRepository) : ViewModel() {
 
     fun getItems() = viewModelScope.launch {
         _dataResult.value = DataResult.Empty
-        repository.getItems().collect {
-            _dataResult.value = it
-        }
+        repository.getItems().collect { _dataResult.value = it }
     }
 }
