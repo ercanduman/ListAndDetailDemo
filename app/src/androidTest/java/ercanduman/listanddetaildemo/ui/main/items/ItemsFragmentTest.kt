@@ -13,15 +13,15 @@ import ercanduman.listanddetaildemo.data.model.Product
 import ercanduman.listanddetaildemo.data.model.RestApiResponse
 import ercanduman.listanddetaildemo.data.model.RestApiResponseItem
 import ercanduman.listanddetaildemo.data.model.SalePrice
-import ercanduman.listanddetaildemo.data.network.RestApi
 import ercanduman.listanddetaildemo.data.repository.AppRepository
 import ercanduman.listanddetaildemo.ui.main.MainActivity
 import ercanduman.listanddetaildemo.ui.main.MainViewModel
+import ercanduman.listanddetaildemo.util.DataResult
 import kotlinx.coroutines.test.runBlockingTest
-import org.junit.Before
 import org.junit.Test
-import org.mockito.Mockito
-import retrofit2.Response
+import org.mockito.Mockito.mock
+import org.mockito.Mockito.verify
+import org.mockito.kotlin.whenever
 
 /**
  * Contains UI related test cases for [ItemsFragment].
@@ -35,17 +35,6 @@ import retrofit2.Response
  */
 class ItemsFragmentTest {
 
-    private lateinit var viewModel: MainViewModel
-    private lateinit var repository: AppRepository
-    private lateinit var restApi: RestApi
-
-    @Before
-    fun setUp() {
-        restApi = Mockito.mock(RestApi::class.java)
-        repository = AppRepository(restApi)
-        viewModel = MainViewModel(repository)
-    }
-
     @Test
     fun test_check_if_child_views_displayed() {
         launchFragmentInContainer(themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar) {
@@ -55,29 +44,6 @@ class ItemsFragmentTest {
         onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
         onView(withId(R.id.progress_bar_items)).check(matches(isDisplayed()))
         onView(withId(R.id.tv_error_items)).check(matches(withEffectiveVisibility(Visibility.GONE)))
-    }
-
-    @Test
-    fun test_items_fragment_with_sample_data() = runBlockingTest {
-        val productName = "Default Product Name"
-        val product = Product("1", "Desc", "11", productName, SalePrice("1.1", "EUR"), "")
-        val responseItem = RestApiResponseItem("description", "123", "Name", listOf(product))
-
-        val apiResponse = RestApiResponse()
-        apiResponse.add(responseItem)
-
-        val success: Response<RestApiResponse> = Response.success(200, apiResponse)
-        Mockito.`when`(restApi.getItems()).thenReturn(success)
-
-        launchFragmentInContainer(
-            themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
-        ) {
-            ItemsFragment().also {
-                it.viewModel = viewModel
-            }
-        }
-
-        onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
     }
 
     @Test
@@ -106,6 +72,34 @@ class ItemsFragmentTest {
         onView(withId(R.id.product_image)).check(matches(isDisplayed()))
 
         pressBack()
+
+        onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
+    }
+
+
+    @Test
+    fun test_items_fragment_with_sample_data_from_viewModel() = runBlockingTest {
+        val productName = "Default Product Name"
+        val product = Product("1", "Desc", "11", productName, SalePrice("1.1", "EUR"), "")
+        val responseItem = RestApiResponseItem("description", "123", "Name", listOf(product))
+
+        val apiResponse = RestApiResponse()
+        apiResponse.add(responseItem)
+
+        val repository: AppRepository = mock(AppRepository::class.java)
+        val mainViewModel = MainViewModel(repository)
+        whenever(repository.getItems()).thenReturn(DataResult.Success(apiResponse))
+
+        mainViewModel.getItems()
+        verify(repository.getItems())
+
+        launchFragmentInContainer(
+            themeResId = R.style.Theme_MaterialComponents_Light_DarkActionBar
+        ) {
+            ItemsFragment().also {
+                it.viewModel = mainViewModel
+            }
+        }
 
         onView(withId(R.id.recycler_view_items)).check(matches(isDisplayed()))
     }

@@ -40,7 +40,7 @@ class DetailFragment : Fragment(R.layout.fragment_detail) {
     }
 
     private fun TextView.setContent(content: String?) {
-        this.isVisible = content != null && content.isNotEmpty()
+        this.isVisible = content.isNullOrEmpty().not()
         text = content
     }
 }
