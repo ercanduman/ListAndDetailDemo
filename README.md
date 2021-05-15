@@ -39,7 +39,7 @@ A sample android application created from scratch which contains MVVM architectu
 
 I have followed the diagram below as reference which shows the basic form of MVVM architecture.
 
-mvvm-architecture
+![](https://user-images.githubusercontent.com/11629459/49515908-3e1c3e80-f8a9-11e8-8360-2a3a4d2e6227.png  "mvvm_architecture_ercanduman")
 
 You can find all MVVM architecture codes for Activity, Fragment, ViewModel, ViewModelFactory, LiveData, Repository, Retrofit and Glide library, etc.
 
